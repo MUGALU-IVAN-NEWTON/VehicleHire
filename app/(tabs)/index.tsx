@@ -1,98 +1,150 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import {View, Text, TouchableOpacity,StyleSheet, Image, ScrollView,Dimensions } from "react-native";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
+
+const { width } = Dimensions.get('window');
+
+const CARD_WIDTH = width * 0.75; 
+const CARD_MARGIN = 15;
+
+
+export default function HomeScreen(){
+  return(
+    <SafeAreaProvider>
+      <SafeAreaView style = {{flex:1, paddingTop: 30}}>
+        <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+          
+          <View style = {styles.header}>
+            <Image
+              source={require('../../assets/images/logo.jpeg')}
+              style ={{width: 260,height: 105, alignSelf: 'center' }}
             />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+            <Text style={{marginTop:15, fontSize: 18}}> Start Your Journey with Us</Text>
+            <TouchableOpacity style = {styles.buttonHead} >
+              <Text style={{color: '#fff', fontSize:15}}> Book a Car now </Text>
+            </TouchableOpacity>
+          </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+          <View style={styles.ctn1}>
+            <Text style={{fontSize:15, fontWeight:'400'}}>Sign Up now to try Vehicle Hire experience</Text>
+            <TouchableOpacity style = {styles.btnC1}>
+              <Text>Let go !</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.cars}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={CARD_WIDTH + CARD_MARGIN} 
+              decelerationRate="fast"
+              contentContainerStyle={{ paddingRight: 20 }}
+            >
+              <View style={styles.card1}>
+                <Image  
+                  source={require('../../assets/images/car.png')} 
+                  style ={{width: CARD_WIDTH,height: 140,borderTopRightRadius:10,}}
+                />
+                <Text style= {{marginTop:15, marginLeft:15}}>How does it work ?</Text>
+                <TouchableOpacity style={styles.btnCard1}>
+                  <Text> Click Here </Text>
+                  <AntDesign name="arrow-right" size={18} color="black" />
+                </TouchableOpacity>
+              </View>
+              
+              <View style={styles.card1}>
+                <Image  
+                  source={require('../../assets/images/car.png')} 
+                  style ={{width: CARD_WIDTH,height: 140,borderTopRightRadius:10,}}
+                />
+                <Text style= {{marginTop:15, marginLeft:15}}>How does it work ?</Text>
+                <TouchableOpacity style={styles.btnCard1}>
+                  <Text> Click Here </Text>
+                  <AntDesign name="arrow-right" size={18} color="black" />
+                </TouchableOpacity>
+              </View>
+              
+              <View style={styles.card1}>
+                <Image  
+                  source={require('../../assets/images/car.png')} 
+                  style ={{width: CARD_WIDTH,height: 140,borderTopRightRadius:10,}}
+                />
+                <Text style= {{marginTop:15, marginLeft:15}}>How does it work ?</Text>
+                <TouchableOpacity style={styles.btnCard1}>
+                  <Text> Click Here </Text>
+                  <AntDesign name="arrow-right" size={18} color="black" />
+                </TouchableOpacity>
+              </View>
+              
+              
+            </ScrollView>
+            
+          </View>
+        </ScrollView>
+        
+        
+      </SafeAreaView>
+    </SafeAreaProvider>
+
+    
+)
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+const styles= StyleSheet.create ({
+  header :{
     alignItems: 'center',
-    gap: 8,
+    borderBottomWidth: 0.5 ,
+    borderBottomColor: '#F6F4E8',
+    paddingBottom: 16,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  buttonHead :{
+    backgroundColor: '#000',
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 30,
+    paddingRight: 30,
+    borderRadius: 10,
+    marginTop: 15,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  ctn1:{
+    paddingLeft:30,
+    paddingTop:30, 
   },
-});
+  btnC1:{
+    marginTop:10,
+    backgroundColor: '#C4F7CA',
+    padding:7,
+    alignItems: 'center',
+    width: 75,
+    borderRadius:10,
+  },
+  cars: {
+    paddingLeft:20,
+    marginTop:40,
+  },
+  card1: {
+    width: CARD_WIDTH, 
+    marginRight: CARD_MARGIN,
+    paddingBottom: 15,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    overflow: 'hidden', 
+    elevation: 3,       
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  btnCard1:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 0.5,
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10, 
+    marginTop: 10,
+
+  }
+}) 
