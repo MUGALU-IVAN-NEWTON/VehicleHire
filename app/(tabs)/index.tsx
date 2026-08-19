@@ -4,6 +4,7 @@ import {View, Text, TouchableOpacity,StyleSheet, Image, ScrollView,Dimensions,Fl
 import { SafeAreaView, SafeAreaProvider, } from "react-native-safe-area-context";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
+import  {useRouter}  from 'expo-router';
 
 
 const { width } = Dimensions.get('window');
@@ -13,17 +14,47 @@ const CARD_MARGIN = 15;
 
 const CATEGORIES = ['All', 'Saloon', 'Luxury', 'SUVs', '4x4 Safari', 'Mini Vans', 'Pickups']
 const VEHICLES = [
-  { id: '1', title: 'Toyota Corolla Premio', category: 'Saloon', transmission: 'Automatic' },
-  { id: '2', title: 'Toyota Land Cruiser V8', category: 'Luxury', transmission: 'Automatic' },
-  { id: '3', title: 'Toyota RAV4', category: 'SUVs', transmission: 'Automatic' },
-  { id: '4', title: 'Toyota Land Cruiser Prado TX', category: '4x4 Safari', transmission: 'Automatic' },
-  { id: '5', title: 'Toyota HiAce Super Custom', category: 'Mini Vans', transmission: 'Automatic' },
-  { id: '6', title: 'Toyota Hilux Double Cab', category: 'Pickups', transmission: 'Manual' },
+  { id: '1', 
+    title: 'Toyota Corolla Premio', 
+    category: 'Saloon', 
+    transmission: 'Automatic',
+    image: require('../../assets/images/premio.jpg')
+  },
+  { id: '2', 
+    title: 'Toyota Land Cruiser V8', 
+    category: 'Luxury', 
+    transmission: 'Automatic',
+    image: require('../../assets/images/V8.jpg') 
+  },
+  { id: '3', 
+    title: 'Toyota RAV4', 
+    category: 'SUVs', 
+    transmission: 'Automatic',
+    image: require('../../assets/images/Rav4.jpeg') 
+  },
+  { id: '4', 
+    title: 'Toyota Land Cruiser Prado TX', 
+    category: '4x4 Safari', 
+    transmission: 'Automatic',
+    image: require('../../assets/images/land.jpeg')  
+  },
+  { id: '5', 
+    title: 'Toyota Hiace Super Custom', 
+    category: 'Mini Vans', 
+    transmission: 'Automatic',
+    image: require('../../assets/images/super.jpeg')  
+  },
+  { id: '6', 
+    title: 'Toyota Hilux Double Cab', 
+    category: 'Pickups', 
+    transmission: 'Manual',
+    image: require('../../assets/images/hilux.jpeg')  
+  },
 ];
 
 export default function HomeScreen(){
   const [selectedCategory, setSelectedCategory] = useState('All ');
-
+  const router = useRouter();
   return(
     <SafeAreaProvider>
       <SafeAreaView style = {{flex:1, paddingTop: 30,}}>
@@ -133,13 +164,24 @@ export default function HomeScreen(){
                         <Text style={styles.badgeText}>{item.category}</Text>
                       </View>
                       <Image  
-                        source={require('../../assets/images/car.png')} 
+                        source={item.image} 
                         style={styles.cardImage}
                       />
                       <Text style={styles.carTitle}>{item.title}</Text>
                       <Text style={styles.carDetails}><EvilIcons name="gear" size={18} color="black" />{item.transmission}</Text>
                       
-                      <TouchableOpacity style={styles.btnCard1}>
+                      <TouchableOpacity style={styles.btnCard1} 
+                      onPress={() => router.push({
+                        pathname: '/vehicle-details',
+                        params: {
+                          id: item.id,
+                          title: item.title,
+                          category: item.category,
+                          transmission: item.transmission,
+                          
+                        }
+                      })}
+                      >
                         <Text> More info </Text>
                         <AntDesign name="arrow-right" size={18} color="black" />
                       </TouchableOpacity>
@@ -275,7 +317,7 @@ const styles= StyleSheet.create ({
   cardImage: {
     width: CARD_WIDTH,
     height: 130,
-    
+    // resizeMode: 'cover',
     marginTop: 10,
   },
   carTitle: {
